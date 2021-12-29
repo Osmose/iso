@@ -1,0 +1,31 @@
+{
+  "name": "iso",
+  "version": "0.1.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "start": "webpack serve --config webpack.dev.js",
+    "build": "webpack build --config webpack.prod.js",
+    "deploy": "webpack build --config webpack.prod.js && gh-pages -d dist"
+  },
+  "author": "Osmose",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/plugin-proposal-optional-chaining": "^7.16.0",
+    "copy-webpack-plugin": "^10.0.0",
+    "eslint": "^8.2.0",
+    "gh-pages": "^3.1.0",
+    "prettier": "^2.2.1",
+    "webpack": "^5.64.1",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.5.0",
+    "webpack-merge": "^5.8.0",
+    "webpackbar": "^5.0.2"
+  },
+  "dependencies": {
+    "lodash.invert": "^4.3.0",
+    "phaser": "^3.55.2",
+    "phaser-tiled-json-external-loader": "^0.1.1"
+  }
+}
