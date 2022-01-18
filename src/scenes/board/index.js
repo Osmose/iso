@@ -23,10 +23,13 @@ export default class BoardScene extends Phaser.Scene {
       ...this.input.keyboard.addKeys('S,D,F,ENTER,SHIFT'),
     };
 
+    // Properties shared between several children
+    this.solid = this.add.group(); // Objects the player is blocked by
+
     this.board = new Board(this, 'overworld');
 
     const start = this.board.getStart();
-    this.player = new Player(this, start.x, start.y);
+    this.player = new Player(this, start.x, start.y - 16);
 
     const startRoom = this.board.getRoomForObject(start);
     this.lockCameraToRoom(startRoom);
@@ -65,15 +68,16 @@ class Board {
 
     this.mainLayer = this.tilemap.createLayer('main', this.tilesets, 0, 0);
     this.mainLayer.setCollisionFromCollisionGroup(true);
+    scene.solid.add(this.mainLayer);
 
     this.objectLayer = this.tilemap.getObjectLayer('objects');
 
     this.rooms = [];
     if (getTiledProperty(this.tilemap, 'roomType') === 'grid') {
-      const roomWidthTiles = getTiledProperty(this.tilemap, 'roomWidth');
-      const roomHeightTiles = getTiledProperty(this.tilemap, 'roomHeight');
+      const roomWidthTiles = getTiledProperty(this.tilemap, 'roomWidthTiles');
+      const roomHeightTiles = getTiledProperty(this.tilemap, 'roomHeightTiles');
       if (!roomWidthTiles || !roomHeightTiles) {
-        throw new Error('Missing tilemap properties roomWidth and/or roomHeight');
+        throw new Error('Missing tilemap properties roomWidthTiles and/or roomHeightTiles');
       } else if (this.tilemap.width % roomWidthTiles !== 0 || this.tilemap.height % roomHeightTiles !== 0) {
         throw new Error('Room width or height is not even with map dimensions');
       }
@@ -122,8 +126,13 @@ class Player extends Phaser.GameObjects.Container {
     scene.add.existing(this);
     scene.physics.add.existing(this);
 
-    this.sprite = scene.add.sprite(0, 0, 'player', 0);
+    // Player sprite
+    this.sprite = scene.add.sprite(8, 8, 'player', 0);
     this.add(this.sprite);
+
+    // Physics
+    this.body.setSize(8, 12).setOffset(4, 4);
+    scene.physics.add.collider(this, scene.solid);
 
     this.stateMachine = new StateMachine(
       'idle',

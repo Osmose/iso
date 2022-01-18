@@ -52,7 +52,7 @@
  "orientation":"orthogonal",
  "properties":[
         {
-         "name":"roomHeight",
+         "name":"roomHeightTiles",
          "type":"int",
          "value":8
         }, 
@@ -62,7 +62,7 @@
          "value":"grid"
         }, 
         {
-         "name":"roomWidth",
+         "name":"roomWidthTiles",
          "type":"int",
          "value":10
         }],
