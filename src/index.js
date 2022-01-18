@@ -7,9 +7,9 @@ registerTiledJSONExternalLoader(Phaser);
 window.addEventListener('load', () => {
   const game = (window.game = new Phaser.Game({
     type: Phaser.AUTO,
-    height: 240,
-    width: 320,
-    zoom: 3,
+    height: 144,
+    width: 160,
+    zoom: 4,
     backgroundColor: '#000',
     parent: 'game',
     render: {
@@ -18,7 +18,7 @@ window.addEventListener('load', () => {
     physics: {
       default: 'arcade',
       arcade: {
-        gravity: { y: 320 },
+        gravity: { y: 0 },
       },
     },
     scene: [new BoardScene()],
